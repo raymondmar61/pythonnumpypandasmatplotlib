@@ -6,12 +6,13 @@
 #Dimensions are also called axis.
 import numpy as np
 
+#Part One
 onedimensionalarray = np.array([1, 2, 3, 4, 5, 6, 7])
 twodimensionalarray = np.array([(0, 1, 2, 3), (4, 5, 6, 7)])
 print(onedimensionalarray) #print [1 2 3 4 5 6 7]
-print(onedimensionalarray.shape) #print (7,)
+print(onedimensionalarray.shape) #print (7,) #seven horizontal
 print(twodimensionalarray) #print [[0 1 2 3]\n [4 5 6 7]]
-print(twodimensionalarray.shape) #print (2, 4)
+print(twodimensionalarray.shape) #print (2, 4) #two veritcal, four horizontal
 print(onedimensionalarray[1]) #print 2
 
 import sys
@@ -119,4 +120,120 @@ print(np.char.splitlines("hello\n how are you?")) #print ['hello', ' how are you
 print(np.char.strip(["nina","admin","anaita", "anona"],"a")) #print ['nin' 'dmin' 'nait' 'non'] removes the first and last "a"
 print(np.char.join([":","-","."],["dmy","ymd","period"])) #print ['d:m:y' 'y-m-d' 'p.e.r.i.o.d']
 print(np.char.replace("He is a good dancer","is","was")) #print He was a good dancer
+
+#Part Two
+array6 = np.arange(9)
+print(array6) #print [0 1 2 3 4 5 6 7 8]
+array7 = array6.reshape(3,3)
+print(array7)
+'''
+[[0 1 2]
+ [3 4 5]
+ [6 7 8]]
+ '''
+print("array7 dimensions",array7.ndim) #print array7 dimensions 2
+#RM:  array7 = array6.reshape(4,2) is ValueError: cannot reshape array of size 9 into shape (4,2)
+array7 = array7.flatten()
+print(array7) #print [0 1 2 3 4 5 6 7 8]
+array8 = array7.reshape(3,3)
+print(array8)
+'''
+[[0 1 2]
+ [3 4 5]
+ [6 7 8]]
+'''
+array8 = array8.flatten(order="F")  #C is row major, F is column-major, A is default
+print(array8) #print [0 3 6 1 4 7 2 5 8]
+array9 = np.arange(12).reshape(4,3)  #Four vertical four down, three horizontal three across
+print(array9)
+'''
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]]
+'''
+array9 = np.transpose(array9)
+print(array9)
+'''
+[[ 0  3  6  9]
+ [ 1  4  7 10]
+ [ 2  5  8 11]]
+'''
+print(list(array9)) #print [array([0, 3, 6, 9]), array([ 1,  4,  7, 10]), array([ 2,  5,  8, 11])]
+print(list(array6)) #print [0, 1, 2, 3, 4, 5, 6, 7, 8]
+array10 = np.arange(1,9).reshape(2,4)
+print(array10)
+'''
+[[1 2 3 4]
+ [5 6 7 8]]
+'''
+array11 = np.arange(8).reshape(2,2,2)
+print(array11)
+'''
+[[[0 1]
+  [2 3]]
+
+ [[4 5]
+  [6 7]]]
+'''
+print("array 11 dimensions",array11.ndim) #print array 11 dimensions 3
+print(np.rollaxis(array11,2))
+'''
+[[[0 2]
+  [4 6]]
+
+ [[1 3]
+  [5 7]]]
+'''
+print(np.rollaxis(array11,2,1))
+'''
+[[[0 2]
+  [1 3]]
+
+ [[4 6]
+  [5 7]]]
+'''
+print(np.swapaxes(array11,1,2))
+'''
+[[[0 2]
+  [1 3]]
+
+ [[4 6]
+  [5 7]]]
+'''
+print("\n")
+
+arraymath1 = np.arange(9).reshape(3,3)
+print(arraymath1)
+'''
+[[0 1 2]
+ [3 4 5]
+ [6 7 8]]
+'''
+arraymath2 = np.array([10, 11, 12])
+print(np.add(arraymath1, arraymath2))  #RM:  the shape horizontal must be the same.  arraymath2 = np.array([10, 11]) error message.
+'''
+[[10 12 14]
+ [13 15 17]
+ [16 18 20]]
+'''
+print(np.subtract(arraymath1, arraymath2))  #RM:  the shape horizontal must be the same.  arraymath2 = np.array([10, 11]) error message.
+'''
+[[-10 -10 -10]
+ [ -7  -7  -7]
+ [ -4  -4  -4]]
+'''
+#RM:  np.multiply() and np.divide() exists
+print("\n")
+
+slicearray1 = np.arange(20)
+print(slicearray1) #print [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19]
+print(slicearray1[5]) #print 5
+print(slicearray1[4:]) #print [ 4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19]
+print(slicearray1[:4]) #print [0 1 2 3]
+print(slicearray1[slice(2, 9, 2)]) #print [2 4 6 8]
+print(slicearray1[slice(3, 15, 2)]) #print [ 3  5  7  9 11 13]
+print(slicearray1[slice(4, 16, 3)]) #print [ 4  7 10 13]
+#start 18:19
+
 
