@@ -209,8 +209,197 @@ print(a55[3:, [0, 2, 5]])
 '''
 mask = np.array([1, 0, 1, 0, 0, 1], dtype = np.bool)
 print(a55[mask, 2]) #print [ 2 22 52]
-#start 01:13:24
+a = np.arange(25).reshape(5, 5)
+print(a)
+'''
+[[ 0  1  2  3  4]
+ [ 5  6  7  8  9]
+ [10 11 12 13 14]
+ [15 16 17 18 19]
+ [20 21 22 23 24]]
+'''
+#print(a[[0,2], [2,3], [3,1], [3,4]]) #error message
+print(a[[0, 2, 3, 3],[2, 3, 1, 4]]) #print [ 2 13 16 19]
+b = np.zeros((5,5), dtype=np.bool)
+print(b)
+'''
+[[False False False False False]
+ [False False False False False]
+ [False False False False False]
+ [False False False False False]
+ [False False False False False]]
+'''
+counter = 0
+while counter < 25:
+	for aa in range(0,5):
+		for c in range(0,5):
+			#RM:  0 is divisible by 3.
+			if counter % 3 == 0:
+				b[aa,c] = 1
+			counter += 1
+print(b)
+'''
+[[ True False False  True False]
+ [False  True False False  True]
+ [False False  True False False]
+ [ True False False  True False]
+ [False  True False False  True]]
+'''
+y = a[b]
+print(y) #print [ 0  3  6  9 12 15 18 21 24]
+#instructor solution
+print(a[a % 3 == 0]) #print [ 0  3  6  9 12 15 18 21 24]
 
+#Multi-dimensional Arrays
+#One dimension (4,0) [one row], four columns across left to right
+#Two dimensions (2,4) two rows, four columns across left to right for each row
+#Three dimensions (3, 2, 4) three columns back or depth, two rows or height, four columns across left to right for each row
+#2 Three dimensions (2, 3, 2, 4) 2 three columns back or depth, two rows or height, four columns across left to right for each row
+#Numpy is row-centric.
+
+#Array Calculation Methods
+#1.  Operations between multiple array objects are first checked for proper shape match.  Broadcasting rules.
+#2.  Mathematical operators apply element by element on the values.
+#3.  Reduction operations such as mean, std, skew, kurt, sum, and prod apply to the whole array unless an axis or which dimension to compute is specified.  In other words, the answer is collapsed to a single value.
+#4.  Missing values propagate unless explicitly ignored such as nanmean and nansum.  nan means not a number.
+#Different dimension arrays can be combined in the same expression.  Arrays with smaller dimension are broadcasted to match the larger arrays without copying data.  There are two rules:  1. Prepend ones to smaller array's shape.  2.  Dimensions of size 1 are repeated without copying.
+a = np.arange(15).reshape(5,3)
+print(a)
+'''
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]
+ [12 13 14]]
+'''
+b = np.array([5, 10, 15])
+print(b) #print [ 5 10 15]
+print(a+b)
+'''
+[[ 5 11 17]
+ [ 8 14 20]
+ [11 17 23]
+ [14 20 26]
+ [17 23 29]]
+'''
+a = np.array([[1, 2, 3], [4, 5, 6]])
+print(a)
+'''
+[[1 2 3]
+ [4 5 6]]
+'''
+#.sum() defaults add all the values
+print(a.sum()) #print 21
+print(np.sum(a)) #print 21
+#specific axis=0 keyword to sum along the axis.  RM:  lament terms add the columns(?)
+print(a.sum(axis = 0)) #print [5 7 9]
+print(np.sum(a, axis = 0)) #print [5 7 9]
+#specific axis=-1 keyword to sum along the axis.  RM:  lament terms add the rows(?)
+print(a.sum(axis = -1)) #print [ 6 15]
+print(np.sum(a, axis = -1)) #print [ 6 15]
+#More methods and functions:  prod, min, max, argmin, argmax, ptp peak to peak difference between max and min (max-min), mean, std, var.  There are more.
+#truth value testing methods and functions: any, all.  There are more.
+a = np.array([[1, 2, 3], [4, 5, 6]])
+print(a)
+'''
+[[1 2 3]
+ [4 5 6]]
+'''
+print(a.ptp(axis = 0)) #print [3 3 3]
+print(a.ptp(axis = -1)) #print [2 2]
+a = np.array([[4, 7, 1], [9, 2, 5]])
+print(a)
+'''
+[[4 7 1]
+ [9 2 5]]
+'''
+print(a.ptp(axis = 0)) #print [5 5 4]
+print(a.ptp(axis = -1)) #print [6 7]
+print(a.min()) #print 1 #function
+print(np.min(a)) #print 1 #method
+print(a.max(axis=0)) #print [9 7 5]
+print(np.max(a, axis=-1)) #print [7 9]
+print(a.argmax()) #print 3 Flattens the array and returns the position, not the value
+print(np.argmin(a)) #print 2 Flattens the array and returns the position, not the value
+print(np.unravel_index(a.argmax(), a.shape)) #print (1, 0) #unflatten the array and returns the position as a tuple (row, column)
+print(np.unravel_index(a.argmin(), a.shape)) #print (0, 2) #unflatten the array and returns the position as a tuple (row, column)
+
+#if there are multiple maximum and minimum same values, then it returns the first position encountered
+numberlist = [1, 3, 5, 7, 9, 3]
+print([x==3 for x in numberlist]) #print [False, True, False, False, False, True]
+a = np.array([5, -1, 2, 5, 5])
+amax = a.max()
+print(amax) #print 5
+print(a==a.max()) #print [ True False False  True  True]
+#where function has two distinct uses.  One is to provide coordinates from masks.  Second is construct a new array by choosing values from other arrays of the same shape.
+#where find position or coordinates
+print(np.where(a == a.max())) #print (array([0, 3, 4]),)
+print(np.where(a == a.max())[0]) #print [0 3 4]
+print(np.where(a > 0)[0]) #print [0 2 3 4]
+#where new array from other arrays
+b = np.array([0, 0, 1, 5555])
+c = np.array([0, 1, -1, -5555])
+fourpositives = np.array([1, 2, 3, 4])
+fournegatives = np.array([-4, -3, -2, -1])
+#RM:  it seems a 0 prints fournegatives, non zero prints fourpositives
+print(np.where(b, fourpositives, fournegatives)) #print [-4 -3  3  4]
+print(np.where(c, fourpositives, fournegatives)) #print [-4  2  3  4]
+
+array9 = np.arange(12).reshape(4,3)  #Four vertical four down, three horizontal three across
+print(array9)
+'''
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]]
+'''
+array9 = np.transpose(array9)
+print(array9)
+'''
+[[ 0  3  6  9]
+ [ 1  4  7 10]
+ [ 2  5  8 11]]
+'''
+array8 = array9.flatten(order="F")  #C is row major, F is column-major, A is default.  Flatten() is a copy of the original data.  Changing array8 doesn't change array9.
+print(array8) #print [ 0  1  2  3  4  5  6  7  8  9 10 11]
+#also
+array9 = np.arange(12).reshape(4,3)  #Four vertical four down, three horizontal three across
+print(array9)
+'''
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]]
+'''
+array8 = array9.ravel()  #ravel() is a reference or view if possible when all of the elements are next to each other row wise.  Otherwise, the new array is a copy.  Changing array 8 changes array9
+print(array8) #print [ 0  1  2  3  4  5  6  7  8  9 10 11]
+array8[0] = 999
+print(array9)
+'''
+[[999   1   2]
+ [  3   4   5]
+ [  6   7   8]
+ [  9  10  11]]
+ '''
+
+#Operations affect the array structure, not the data, can usually be executed without coyping memory.  On the other hand, flatten() is a copy of the original data.
+a = np.arange(6)
+print(a) #print [0 1 2 3 4 5]
+b = a.reshape(2, 3)
+print(b) #No new copy of the data.  The original data doesn't get reordered.
+'''
+[[0 1 2]
+ [3 4 5]]
+'''
+#also
+a = np.arange(6)
+print(a) #print [0 1 2 3 4 5]
+a.shape = (2, 3)
+print(a)
+'''
+[[0 1 2]
+ [3 4 5]]
+'''
 print("\n")
 #https://projecteuler.net/problem=18 Maximum path sum I
 #By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is 23.  That is, 3 + 7 + 4 + 9 = 23.
@@ -219,6 +408,7 @@ print("\n")
 7 4
 2 4 6
 8 5 9 3
+"""
 """
 adjacent = np.array([[3, 0, 0, 0], [7, 4, 0, 0], [2, 4, 6, 0], [8, 5, 9, 3]])
 print(adjacent)
@@ -235,3 +425,4 @@ print(adjacent[[0, 1, 2, 3],[0, 0, 0, 1]])
 print(adjacent[[0, 1, 2, 3],[0, 0, 1, 0]])
 print(adjacent[[0, 1, 2, 3],[0, 0, 1, 1]])
 print(adjacent[[0, 1, 2, 3],[0, 0, 1, 2]])
+"""
