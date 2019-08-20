@@ -163,7 +163,7 @@ print(a)
  [ 0.80214372  0.873687  ]
  [ 0.01499133  0.34825153]]
 '''
-a = np.array([[1,2,3,4,5,6,7], [8,9,10,11,12,13,14]])
+a = np.array([[1,2,3,4,5,6,7],[8,9,10,11,12,13,14]])
 print(a)
 '''
 [[ 1  2  3  4  5  6  7]
@@ -289,4 +289,184 @@ print(np.min(stats, axis=1)) #print [1 4]
 print(np.sum(stats)) #print 21
 print(np.sum(stats, axis=0)) #print [7 7 7]
 print(np.sum(stats, axis=1)) #print [ 6 15]
-#start video at 44:00
+
+before = np.array([[1,2,3,4],[5,6,7,8]])
+print(before)
+'''
+[[1 2 3 4]
+ [5 6 7 8]]
+'''
+after81 = before.reshape((8,1))
+print(after81)
+'''
+[[1]
+ [2]
+ [3]
+ [4]
+ [5]
+ [6]
+ [7]
+ [8]]
+'''
+after42 = before.reshape((4,2))
+print(after42)
+'''
+[[1 2]
+ [3 4]
+ [5 6]
+ [7 8]]
+'''
+v1 = np.array([1,2,3,4])
+v2 = np.array([5,6,7,8])
+print(np.vstack([v1,v2]))
+'''
+[[1 2 3 4]
+ [5 6 7 8]]
+'''
+print(np.vstack([v1,v2,v2,v2]))
+'''
+[[1 2 3 4]
+ [5 6 7 8]
+ [5 6 7 8]
+ [5 6 7 8]]
+'''
+print(np.hstack([v1,v2])) #print [1 2 3 4 5 6 7 8]
+h1 = np.ones((2,4), dtype=np.int)
+h2 = np.zeros((2,2), dtype=np.int)
+print(np.hstack((h1,h2)))
+'''
+[[1 1 1 1 0 0]
+ [1 1 1 1 0 0]]
+'''
+
+numberstext = (np.genfromtxt('data.txt', delimiter=','))
+print(numberstext)
+'''
+[[   1.   13.   21.   11.  196.   75.    4.    3.   34.    6.    7.    8.
+     0.    1.    2.    3.    4.    5.]
+ [   3.   42.   12.   33.  766.   75.    4.   55.    6.    4.    3.    4.
+     5.    6.    7.    0.   11.   12.]
+ [   1.   22.   33.   11.  999.   11.    2.    1.   78.    0.    1.    2.
+     9.    8.    7.    1.   76.   88.]]     
+'''
+print(numberstext.astype('int32'))
+'''
+[[  1  13  21  11 196  75   4   3  34   6   7   8   0   1   2   3   4   5]
+ [  3  42  12  33 766  75   4  55   6   4   3   4   5   6   7   0  11  12]
+ [  1  22  33  11 999  11   2   1  78   0   1   2   9   8   7   1  76  88]]
+'''
+print(np.hstack(numberstext))
+'''
+[   1.   13.   21.   11.  196.   75.    4.    3.   34.    6.    7.    8.
+    0.    1.    2.    3.    4.    5.    3.   42.   12.   33.  766.   75.
+    4.   55.    6.    4.    3.    4.    5.    6.    7.    0.   11.   12.
+    1.   22.   33.   11.  999.   11.    2.    1.   78.    0.    1.    2.
+    9.    8.    7.    1.   76.   88.]
+'''
+numberstextinteger = (np.genfromtxt('data.txt', delimiter=',', dtype=np.int))
+print(np.hstack(numberstextinteger))
+'''
+[  1  13  21  11 196  75   4   3  34   6   7   8   0   1   2   3   4   5
+   3  42  12  33 766  75   4  55   6   4   3   4   5   6   7   0  11  12
+   1  22  33  11 999  11   2   1  78   0   1   2   9   8   7   1  76  88]
+'''
+for eachnumberstextinteger in numberstextinteger:
+	print(eachnumberstextinteger)
+	'''
+	[  1  13  21  11 196  75   4   3  34   6   7   8   0   1   2   3   4   5]
+	[  3  42  12  33 766  75   4  55   6   4   3   4   5   6   7   0  11  12]
+	[  1  22  33  11 999  11   2   1  78   0   1   2   9   8   7   1  76  88]
+	'''
+print(numberstextinteger.shape) #print (3, 18)
+print(numberstextinteger.shape[0]) #print 3
+for eachrow in range(0,numberstextinteger.shape[0]):
+	for eachindex in range(0,numberstextinteger.shape[1]):
+		print(numberstextinteger[eachrow,eachindex], end=",") #print 1,13,21,11,196,75,4,3,34,6,7,8,0,1,2,3,4,5,3,42,12,33,766,75,4,55,6,4,3,4,5,6,7,0,11,12,1,22,33,11,999,11,2,1,78,0,1,2,9,8,7,1,76,88,
+print("\n")
+
+#boolean masking and advanced indexing
+filedata = (np.genfromtxt('data.txt', delimiter=','))
+print(filedata)
+'''
+[[   1.   13.   21.   11.  196.   75.    4.    3.   34.    6.    7.    8.
+     0.    1.    2.    3.    4.    5.]
+ [   3.   42.   12.   33.  766.   75.    4.   55.    6.    4.    3.    4.
+     5.    6.    7.    0.   11.   12.]
+ [   1.   22.   33.   11.  999.   11.    2.    1.   78.    0.    1.    2.
+     9.    8.    7.    1.   76.   88.]]
+'''
+print(filedata > 50)
+'''
+[[False False False False  True  True False False False False False False
+  False False False False False False]
+ [False False False False  True  True False  True False False False False
+  False False False False False False]
+ [False False False False  True False False False  True False False False
+  False False False False  True  True]]
+'''
+print(filedata[filedata > 50]) #print [ 196.   75.  766.   75.   55.  999.   78.   76.   88.]
+print(np.any(filedata > 50, axis=0)) #print [False False False False  True  True False  True  True False False False False False False False  True  True] #Looking at each column is any number greater than 50
+print(np.all(filedata > 50, axis=0)) #print[False False False False  True False False False False False False False False False False False False False] #Looking at each column is all numbers greater than 50
+print(np.all(filedata > 50, axis=1)) #print[False False False] #Looking at each row is all numbers greater than 50
+print(((filedata > 50) & (filedata < 100)))
+'''
+[[False False False False False  True False False False False False False
+  False False False False False False]
+ [False False False False False  True False  True False False False False
+  False False False False False False]
+ [False False False False False False False False  True False False False
+  False False False False  True  True]]
+'''
+print(~((filedata > 50) & (filedata < 100))) #tilda ~ is not or opposite
+'''
+[[ True  True  True  True  True False  True  True  True  True  True  True
+   True  True  True  True  True  True]
+ [ True  True  True  True  True False  True False  True  True  True  True
+   True  True  True  True  True  True]
+ [ True  True  True  True  True  True  True  True False  True  True  True
+   True  True  True  True False False]]
+'''
+print([(filedata > 50) & (filedata < 100)])
+'''
+[array([[False, False, False, False, False,  True, False, False, False,
+        False, False, False, False, False, False, False, False, False],
+       [False, False, False, False, False,  True, False,  True, False,
+        False, False, False, False, False, False, False, False, False],
+       [False, False, False, False, False, False, False, False,  True,
+        False, False, False, False, False, False, False,  True,  True]], dtype=bool)]
+'''
+print(filedata[(filedata > 50) & (filedata < 100)])  #print [ 75.  75.  55.  78.  76.  88.]
+
+#you can index with a list in NumPy
+a = np.arange(1,10)
+print(a) #print [1 2 3 4 5 6 7 8 9]
+print(a[[1,2,8]]) #print [2 3 9]
+print(a[[False, False, False, True, False, False, False, True, True]]) #print [4 8 9]
+
+thirty = np.arange(1,31)
+print(thirty) #print [ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]
+thirty65 = thirty.reshape(6,5)
+print(thirty65)
+'''
+[[ 1  2  3  4  5]
+ [ 6  7  8  9 10]
+ [11 12 13 14 15]
+ [16 17 18 19 20]
+ [21 22 23 24 25]
+ [26 27 28 29 30]]
+'''
+print(thirty65[2:4,0:2])
+'''
+[[11 12]
+ [16 17]]
+'''
+print(thirty65[[0,1],[1,2]]) #print [2 8]
+#print(thirty65[[0,1],[1,2],[2,3],[3,4]]) #error message
+print(thirty65[[0,1,2,3],[1,2,3,4]]) #print [ 2  8 14 20]
+print(thirty65[[0,0,4,4,5,5],[3,4,3,4,3,4]]) #print [ 4  5 24 25 29 30]
+print(thirty65[[0,4,5],3:])
+'''
+[[ 4  5]
+ [24 25]
+ [29 30]]
+'''
