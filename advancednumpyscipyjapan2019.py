@@ -193,6 +193,116 @@ print(dist75)
  [ 0.04783808  0.52823699  0.56843681]
  [ 0.1022842   0.49463548  0.46999074]]
 '''
-print(np.argmin(dist75, axis=1)) #print [0 0 1 1 2 2 2 0 0 0]
+print(np.argmin(dist75, axis=1)) #print [0 0 1 1 2 2 2 0 0 0].  Prints row index number for number closest to 0.75 looking at numpy array10x3, not numpy dist75.  dist75 helps find the row index number closest to zero.
 
-#start 43:20 exercise  #RM:  I don't know argmin and abs.
+#start 43:20 exercise  Find the variance in the expr.npy file.  Sort the values in value to retrieve the 1,500 highest numbers.  Produce a shape of (1500, 375) matrix.
+#expr.npy is the file name
+#RM:  I don't know argmin and abs.  I don't know np.var and np.argsort.
+print(expr.shape) #print (20500, 375)
+rowvariance = np.var(expr, axis=1)  #I'm guessing get the variance for each row.  Row is denoted by axis=1.
+print(rowvariance) #print [  1.15134606e+02   2.69122020e+02   1.20892527e+09 ...,   2.16789079e+06   4.30965782e+05   1.07554677e+05]
+print(rowvariance.shape) #print (20500,)
+rowvarianceorder = np.argsort(rowvariance)  #sorts the values from smallest to biggest
+print(rowvarianceorder) #print [14473  1800 17851 ..., 14683 10080  7424]
+mostvariablerows = rowvarianceorder[-1500:]  #get the biggest 1,500 values using indexing.  Get the 1,500th value from the end to the 1st highest value.  I think it's the 1,500 rows with most variance.
+print(mostvariablerows) #print [ 5856 11853 16599 ..., 14683 10080  7424]
+mostvariabledata = expr[mostvariablerows]  #RM:  I don't know what the code does.  Retrieve the rows with the top 1,500 variances is my guess.
+print(mostvariabledata)
+'''
+[[  2945  12905   1182 ...,   4518  10620   5880]
+ [ 10611   4997  15721 ...,   5554   6963   7443]
+ [  1277   1248    112 ...,   1863    377   2835]
+ ..., 
+ [119691  70684 377874 ..., 127389 225083 183294]
+ [  2365  61551 195854 ...,    205 529840 414008]
+ [713016  49774 575361 ..., 287205   1051 207329]]
+'''
+print(mostvariabledata.shape) #print (1500, 375)
+
+#Broadcasting.  Two arrays must have the same dimension size or one of the arrays must be size 1 to normalize every column by its corresponding library size.
+a = c
+print(a)
+'''
+[[100 200  50 400]
+ [ 50   0   0 100]
+ [350 100  50 200]]
+'''
+a = a+5
+print(a)
+'''
+[[105 205  55 405]
+ [ 55   5   5 105]
+ [355 105  55 205]]
+'''
+a = c
+b = np.array([1, 2, 3, 4])
+print(a.shape) #print (3, 4)
+print(b.shape) #print (4, ) which is actually (1, 4)
+a = a+b
+print(a)
+'''
+[[101 202  53 404]
+ [ 51   2   3 104]
+ [351 102  53 204]]
+'''
+# a = c
+# b = np.array([1, 2, 3])
+# a = a+b
+# print(a)  #print ValueError: operands could not be broadcast together with shapes (3,4) (3,)
+a = c
+b = np.array([[1], [2], [3]])
+print(a.shape) #print (3, 4)
+print(b.shape) #print (3, 1)
+a = a+b
+print(a)
+'''
+[[101 201  51 401]
+ [ 52   2   2 102]
+ [353 103  53 203]]
+'''
+librarysize = np.sum(expr, axis=0)
+print(expr.shape) #print (20500, 375)
+print(librarysize.shape) #print (375,)
+print(librarysize[np.newaxis, :].shape) #print (1, 375)
+print(np.all([True, True, False])) #print False
+print(np.all(expr/librarysize == expr/librarysize[np.newaxis, :])) #print True
+exprlibrary = expr / librarysize
+exprlibrary *= 1e6 #multiple by 10^6 to keep the numbers on a readable scale which reads per million reads.
+print(exprlibrary)
+'''
+[[  0.00000000e+00   0.00000000e+00   0.00000000e+00 ...,   0.00000000e+00
+    3.01507487e-01   0.00000000e+00]
+ [  2.88883496e-01   1.96755990e-02   0.00000000e+00 ...,   4.40579806e-02
+    5.02512479e-02   7.38250294e-02]
+ [  1.54393784e+03   1.02940766e+03   1.34319315e+03 ...,   1.78298242e+03
+    1.76865967e+03   1.69812333e+03]
+ ..., 
+ [  9.65352349e+00   4.95431582e+01   4.22685116e+01 ...,   4.97855180e+01
+    5.98659866e+01   7.26438290e+01]
+ [  1.10257201e+01   4.25779961e+01   1.51058877e+01 ...,   2.15223235e+01
+    2.18090416e+01   1.25687113e+01]
+ [  0.00000000e+00   0.00000000e+00   0.00000000e+00 ...,   2.20289903e-01
+    0.00000000e+00   0.00000000e+00]]
+'''
+genelength = np.load("gene-lens.npy")
+print(genelength.shape) #print (20500,)
+
+#Broadcast exprlibrary and genelength together to produce RPKM
+rpkm = exprlibrary / genelength[:, np.newaxis]*1e3
+print(rpkm)
+'''
+[[  0.00000000e+00   0.00000000e+00   0.00000000e+00 ...,   0.00000000e+00
+    1.74888334e-01   0.00000000e+00]
+ [  7.97359911e-02   5.43074771e-03   0.00000000e+00 ...,   1.21606350e-02
+    1.38700657e-02   2.03767677e-02]
+ [  5.74595401e+02   3.83106685e+02   4.99885803e+02 ...,   6.63558770e+02
+    6.58228385e+02   6.31977420e+02]
+ ..., 
+ [  2.72621392e+00   1.39912901e+01   1.19368855e+01 ...,   1.40597340e+01
+    1.69065198e+01   2.05150604e+01]
+ [  2.64596115e+00   1.02179016e+01   3.62512303e+00 ...,   5.16494445e+00
+    5.23375128e+00   3.01624940e+00]
+ [  0.00000000e+00   0.00000000e+00   0.00000000e+00 ...,   1.30118076e-01
+    0.00000000e+00   0.00000000e+00]]
+'''
+#RM:  Stopped at 3D broadcasting 01:13:01 too advanced at the moment and the rest of the video is exercises.
