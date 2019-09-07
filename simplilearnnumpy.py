@@ -611,3 +611,133 @@ for x in range(0,3):
 		# y = x - 1
 		# print(numbers[x,y]+numbers[x+1,y]+numbers[x+2,y])
 """
+
+#How to add a new row to an empty numpy array
+#https://stackoverflow.com/questions/22392497/how-to-add-a-new-row-to-an-empty-numpy-array
+#Given the way numpy arrays work, you are much better building an empty array then putting [in] the data according to one user.  It's much faster to append to a list the convert to a numpy array at the end because you're not using numpy as intended during the loop.
+addarray = np.array([], dtype=np.int64)
+addarray = np.append(addarray, np.array([1,2,3]))
+print(addarray) #print [1 2 3]
+addarray = np.append(addarray, np.array([4,5,6]))
+print(addarray) #print [1 2 3 4 5 6]
+emptyaddarray = np.empty((0,3), dtype=np.int64)
+print(emptyaddarray) #print []
+emptyaddarray = np.append(emptyaddarray, np.array([[1,2,3]]), axis=0)
+print(emptyaddarray) #print [[1 2 3]]
+emptyaddarray = np.append(emptyaddarray, np.array([[4,5,6]]), axis=0)
+print(emptyaddarray) #print [[1 2 3]\n [4 5 6]]
+addarray = []
+addarray.append([1,2,3])
+addarray.append([4,5,6])
+print(addarray) #print [[1, 2, 3], [4, 5, 6]]
+npaddarray = np.array(addarray)
+print(npaddarray) #print [[1 2 3]\n [4 5 6]]
+addarray = np.array([], dtype=np.int64)
+addarray = np.hstack((addarray, np.array([1,2,3])))
+print(addarray) #print [1 2 3]
+addarray = np.vstack((addarray, np.array([4,5,6])))
+print(addarray)
+'''
+[[1 2 3]
+ [4 5 6]]
+'''
+addarray = np.vstack((addarray, np.array([7,8,9])))
+print(addarray)
+'''
+[[1 2 3]
+ [4 5 6]
+ [7 8 9]]
+'''
+#addarray = np.hstack((addarray, np.array([10,11,12])))
+#print(addarray)  #print ValueError: all the input arrays must have same number of dimensions
+
+#Python Matrix And Introduction to Numpy
+#https://www.programiz.com/python-programming/matrix#numpy
+anumpy = np.array([[1, 4, 5, 12], [-5, 8, 9, 0], [-6, -7, 11, 19]])
+print(anumpy)
+'''
+[[ 1  4  5 12]
+ [-5  8  9  0]
+ [-6 -7 11 19]]
+'''
+print(anumpy[1]) #print [-5  8  9  0]
+print(anumpy[1,0]) #print -5
+print(anumpy[1][0]) #print -5
+print(anumpy[0,2]) #print 5
+print(anumpy[0][2]) #print 5
+print(anumpy[:,1]) #print [ 4  8 -7]
+print(anumpy[2,3]) #print 19
+print(anumpy[2][3]) #print 19
+print(anumpy[-1][-3]) #print -7
+print(anumpy[0][1:3]) #print [4 5]
+print(anumpy[1][0:2]) #print [-5  8]
+print(anumpy[1][-1:]) #print [0]
+print(anumpy[1][-1:-3]) #print []
+print(anumpy[1][-3:]) #print [8 9 0]
+print(anumpy[1][-1::-1]) #print [ 0  9  8 -5]
+print(anumpy[:2, :3])
+'''
+[[ 1  4  5]
+ [-5  8  9]]
+'''
+print(anumpy[:1,]) #print [[ 1  4  5 12]]
+print(anumpy[:,2]) #print [ 5  9 11]
+print(anumpy[:,2:4])
+'''
+[[ 5 12]
+ [ 9  0]
+ [11 19]]
+'''
+complexnumpy = np.array([[1,2,3],[4,5,6]], dtype=np.complex)
+print(complexnumpy)
+'''
+[[ 1.+0.j  2.+0.j  3.+0.j]
+ [ 4.+0.j  5.+0.j  6.+0.j]]
+'''
+a = np.array([[2,4], [5,-6]])
+b = np.array([[9,-3], [3,6]])
+c = a + b
+print(c)
+'''
+[[11  1]
+ [ 8  0]]
+'''
+c = a * b
+print(c)
+'''
+[[ 18 -12]
+ [ 15 -36]]
+'''
+atranspose = np.array([[1,1], [2,5], [3,-3]])
+print(atranspose)
+'''
+[[ 1  1]
+ [ 2  5]
+ [ 3 -3]]
+'''
+print(atranspose.transpose())
+'''
+[[ 1  2  3]
+ [ 1  5 -3]]
+'''
+
+#https://www.tutorialspoint.com/numpy/numpy_dot.htm#
+#This function returns the dot product of two arrays. For 2-D vectors, it is the equivalent to matrix multiplication. For 1-D arrays, it is the inner product of the vectors. For N-dimensional arrays, it is a sum product over the last axis of a and the second-last axis of b.
+a = np.array([[1,2],[3,4]]) 
+b = np.array([[11,12],[13,14]])
+print(a)
+print(b)
+'''
+[[1 2]
+ [3 4]]
+[[11 12]
+ [13 14]]
+'''
+c = np.dot(a,b)
+print(c)
+'''
+[[37 40]
+ [85 92]]
+'''
+#The dot product is [[1*11+2*13, 1*12+2*14],[3*11+4*13, 3*12+4*14]]
+#RM:  I can't figure it out
