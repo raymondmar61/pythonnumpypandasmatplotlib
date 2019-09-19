@@ -85,6 +85,7 @@ plt.legend()
 plt.show()
 """
 
+"""
 #Pie Chart
 slicesnumbers = [7, 2, 2, 13]
 activitieslabels = ["sleeping","eating","working","playing"]
@@ -95,3 +96,75 @@ plt.ylabel("y-axis label plt.ylabel()")
 plt.title("Pie Chart")
 plt.legend()
 plt.show()
+"""
+
+"""
+#Load data from a file with open and import csv
+import csv
+x = []
+y = []
+with open("example.txt","r") as csvfile:  #instructor says .csv is okay
+	plots = csv.reader(csvfile, delimiter=",")
+	for row in plots:
+		print(row) #print ['1', '5'] . . . ['13', '7']
+		x.append(int(row[0]))
+		y.append(int(row[1]))
+print(x) #print [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+print(y) #print [5, 3, 4, 7, 4, 3, 5, 7, 4, 4, 5, 11, 7]
+plt.plot(x,y, label="Loaded from example.txt")
+plt.xlabel("x-axis label plt.xlabel()")
+plt.ylabel("y-axis label plt.ylabel()")
+plt.title("")
+plt.legend()
+plt.show()
+"""
+"""
+#Load data from a file numpy
+import numpy as np
+x, y = np.loadtxt("example.txt", delimiter=",", unpack=True, dtype=np.int64)  #instructor says .csv is okay
+print(x) #print [ 1  2  3  4  5  6  7  8  9 10 11 12 13]
+print(y) #print [ 5  3  4  7  4  3  5  7  4  4  5 11  7]
+plt.plot(x, y, label="Numpy easier to upload file")
+plt.xlabel("x-axis label plt.xlabel()")
+plt.ylabel("y-axis label plt.ylabel()")
+plt.title("")
+plt.legend()
+plt.show()
+"""
+
+"""
+#Download data from the internet
+import numpy as np
+import urllib
+import matplotlib.dates as mdates
+def bytespdate2num(formatdate,encoding="utf-8"):
+	strconverter=mdates.strpdate2num(formatdate)
+	def bytesconverter(bbytes):
+		sstring = bbytes.decode(encoding)
+		return strconverter(sstring)
+	return bytesconverter
+def graph_data(stock):
+	stockpriceurl="https://www.quandl.com/api/v1/datasets/WIKI/"+stock+".csv?column=4&sort_order=asc&collapse=quarterly&trim_start=2017-01-01&trim_end=2018-01-01"
+	sourcecode=urllib.request.urlopen(stockpriceurl).read().decode()
+	print(sourcecode)
+	splitsource=sourcecode.split("\n")
+	del(splitsource[0]) #delete Date,Close the first list item
+	del(splitsource[-1]) #delete null the last list item
+	print(splitsource)
+	dateclose, closeprice = np.loadtxt(splitsource,delimiter=",",unpack=True,converters={0: bytespdate2num("%Y-%m-%d")})
+	print(dateclose)
+	print(closeprice)
+	plt.plot_date(dateclose,closeprice, label="default dots")
+	plt.xlabel("xlabel")
+	plt.ylabel("ylabel")
+	plt.title("title\ntitlenewline")
+	plt.legend()
+	plt.show() #show graph default dots
+	plt.plot_date(dateclose,closeprice, "-", label="line chart denoated by hyphen")
+	plt.xlabel("xlabel")
+	plt.ylabel("ylabel")
+	plt.title("title\ntitlenewline")
+	plt.legend()
+	plt.show() #show graph line chart denoated by hyphen"	
+graph_data("AAPL")
+"""
