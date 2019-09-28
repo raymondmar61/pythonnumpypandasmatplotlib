@@ -121,3 +121,20 @@ plt.title("Most Popular Languages plt.title()")
 plt.tight_layout()
 plt.show()
 """
+
+
+#Matplotlib Tutorial (Part 3)_ Pie Charts [720p]
+plt.style.use("fivethirtyeight")
+# slices = [120, 80, 30, 20]
+# labels = ["Sixty","Forty", "Extra1","Extra2"]
+# colorslices = ["#008fd5","r","yellow","green"]
+# slices = [59219, 55466, 47544, 36443, 35917, 31991, 27097, 23030, 20524, 18523, 18017, 7920, 7331, 7201, 5833]
+# labels = ["JavaScript", "HTML/CSS", "SQL", "Python", "Java", "Bash/Shell/PowerShell", "C#", "PHP", "C++", "TypeScript", "C", "Other(s):", "Ruby", "Go", "Assembly"]
+slicestopfive = [59219, 55466, 47544, 36443, 35917]
+labelstopfive = ["JavaScript", "HTML/CSS", "SQL", "Python", "Java"]
+colorslices = ["#008fd5","r","yellow","green","b"]
+explodemovesliceout = [0, 0, 0, 0.1, 0]
+plt.pie(slicestopfive, labels=labelstopfive, colors=colorslices, explode=explodemovesliceout, shadow=True, startangle=90, autopct="%1.1f%%", wedgeprops={"edgecolor":"black"})  #start angle rotates counterclockwise.  autopct includes percentages of the total pie chart.
+plt.title("Top Five Programming Languages Count Of People plt.title()")
+plt.tight_layout()
+plt.show()
