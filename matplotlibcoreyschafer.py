@@ -1,7 +1,7 @@
 #YouTube Corey Schafer
 
 #Press Q to exit the plot window
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 
 """
 #Matplotlib Tutorial (Part 1)_ Creating and Customizing Our First Plots [720p]
@@ -122,7 +122,7 @@ plt.tight_layout()
 plt.show()
 """
 
-
+"""
 #Matplotlib Tutorial (Part 3)_ Pie Charts [720p]
 plt.style.use("fivethirtyeight")
 # slices = [120, 80, 30, 20]
@@ -136,5 +136,53 @@ colorslices = ["#008fd5","r","yellow","green","b"]
 explodemovesliceout = [0, 0, 0, 0.1, 0]
 plt.pie(slicestopfive, labels=labelstopfive, colors=colorslices, explode=explodemovesliceout, shadow=True, startangle=90, autopct="%1.1f%%", wedgeprops={"edgecolor":"black"})  #start angle rotates counterclockwise.  autopct includes percentages of the total pie chart.
 plt.title("Top Five Programming Languages Count Of People plt.title()")
+plt.tight_layout()
+plt.show()
+"""
+
+"""
+#Matplotlib Tutorial (Part 4)_ Stack Plots [720p]
+#RM:  Area plot or area chart
+plt.style.use("fivethirtyeight")
+time = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+#player1points = [1, 2, 3, 3, 4, 4, 4, 4, 5]
+#player2points = [1, 1, 1, 1, 2, 2, 2, 3, 4]
+#player3points = [1, 1, 1, 2, 2, 2, 3, 3, 3]
+developer1hours = [8, 6, 5, 5, 4, 2, 1, 1, 0]
+developer2hours = [0, 1, 2, 2, 2, 4, 4, 4, 4]
+developer3hours = [0, 1, 1, 1, 2, 2, 3, 3, 4]
+#labelslist = ["player1points", "player2points", "player3points"]
+labelslist = ["developer1hours", "developer2hours", "developer3hours"]
+colorslist = ["#6d904f","#fc4f30","008fd5"]
+#plt.stackplot(time, player1points, player2points, player3points, colors=colorslist, labels=labelslist)
+plt.stackplot(time, developer1hours, developer2hours, developer3hours, colors=colorslist, labels=labelslist)
+#plt.legend(loc="lower left")
+plt.legend(loc=(0.07, 0.05))  #these are percentages away from left and away from bottom.
+#plt.title("My Awesome Stack Plot Points Scored Per Time")
+plt.title("My Awesome Stack Plot Hours Worked Per Time")
+plt.tight_layout()
+plt.show()
+"""
+
+
+#Matplotlib Tutorial (Part 5)_ Filling Area on Line Plots [720p]
+import pandas as pd
+from matplotlib import pyplot as plt  #RM:  Python pandas must be uploaded first, matplotlib afterwards.
+data = pd.read_csv("data05fillbetweens.csv")
+ages = data["Age"]
+developersalary = data["All_Devs"]
+pythonsalary = data["Python"]
+javascriptsalary = data["JavaScript"]
+plt.plot(ages, developersalary, color="#444444", linestyle="--", label="All Developers Salary")
+plt.plot(ages, pythonsalary, label="Python Salary")
+overallmedian = 78508  #RM:  Excel calculated overall median 78508.  Instructor edited numbers during tutorial.
+#plt.fill_between(ages, pythonsalary, overallmedian, where=(pythonsalary > overallmedian), interpolate=True, alpha=0.25)  #alpha is transparency.  1 is solid or no transparency.  where denotes which qualifying areas to display transparency. interpolate fill more accurately.
+#plt.fill_between(ages, pythonsalary, overallmedian, where=(pythonsalary <= overallmedian), interpolate=True, color="red", alpha=0.25)  #alpha is transparency.  1 is solid or no transparency.  where denotes which qualifying areas to display transparency. interpolate fill more accurately.
+plt.fill_between(ages, pythonsalary, developersalary, where=(pythonsalary > developersalary), interpolate=True, alpha=0.25, label="Above Average")  #alpha is transparency.  1 is solid or no transparency.  where denotes which qualifying areas to display transparency. interpolate fill more accurately.  These are filling between pythonsalary line and developersalary line
+plt.fill_between(ages, pythonsalary, developersalary, where=(pythonsalary <= developersalary), interpolate=True, color="red", alpha=0.25, label="Below Average")  #alpha is transparency.  1 is solid or no transparency.  where denotes which qualifying areas to display transparency. interpolate fill more accurately.  These are filling between pythonsalary line and developersalary line
+plt.legend()
+plt.title("Median Salary (USD) by Age")
+plt.xlabel("Ages")
+plt.ylabel("Median Salary (USD)")
 plt.tight_layout()
 plt.show()
