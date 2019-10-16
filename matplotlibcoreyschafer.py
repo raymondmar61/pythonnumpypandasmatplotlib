@@ -164,7 +164,7 @@ plt.tight_layout()
 plt.show()
 """
 
-
+"""
 #Matplotlib Tutorial (Part 5)_ Filling Area on Line Plots [720p]
 import pandas as pd
 from matplotlib import pyplot as plt  #RM:  Python pandas must be uploaded first, matplotlib afterwards.
@@ -184,5 +184,47 @@ plt.legend()
 plt.title("Median Salary (USD) by Age")
 plt.xlabel("Ages")
 plt.ylabel("Median Salary (USD)")
+plt.tight_layout()
+plt.show()
+"""
+
+
+#Matplotlib Tutorial (Part 6)_ Histograms [720p]
+#https://stackoverflow.com/questions/26454649/python-round-up-to-the-nearest-ten
+#https://stackoverflow.com/questions/3348825/how-to-round-integers-in-python
+#Historgrams is lower end inclusive to upper end exclusive
+import pandas as pd
+from matplotlib import pyplot as plt  #RM:  Python pandas must be uploaded first, matplotlib afterwards.
+from math import *
+plt.style.use("fivethirtyeight")
+ages = [18, 19, 21, 25, 26, 26, 30, 32, 38, 45, 55]
+#binslist = [10, 20, 30, 40, 50, 60]
+print(floor(min(ages)/10.0)*10) #print 10
+print(ceil(max(ages)/10.0)*10) #print 60
+lowestbin = floor(min(ages)/10.0)*10
+highestbin = ceil(max(ages)/10.0)*10
+binslist = [x for x in range(lowestbin, highestbin+1,10)]
+print(binslist) #print [10, 20, 30, 40, 50, 60]
+plt.hist(ages, bins=binslist, edgecolor="black")
+plt.title("Ages Of Respondents")
+plt.xlabel("Ages")
+plt.ylabel("Total Respondents")
+plt.tight_layout()
+plt.show()
+binslistexcludelowerages = [20, 30, 40, 50, 60]
+plt.title("Ages Of Respondents 20 and greater")
+plt.hist(ages, bins=binslistexcludelowerages, edgecolor="black")
+plt.show()
+data = pd.read_csv("data06histograms.csv")
+ids = data["Responder_id"]
+ages = data["Age"]
+bins = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+plt.hist(ages, bins=bins, edgecolor="black", log=True) #print on logarithmeic scale log=True
+medianage = 29
+plt.axvline(medianage, color="#fc4f30", label="Median Age", linewidth=2)  #axis vertical line
+plt.legend()
+plt.title("Ages Of Respondents From data06histograms.csv")
+plt.xlabel("Ages")
+plt.ylabel("Total Respondents")
 plt.tight_layout()
 plt.show()
