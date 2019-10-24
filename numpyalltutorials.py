@@ -1,7 +1,8 @@
 #YouTube Joeyajames
 #YouTube edureka
 #YouTube www.Simplilearn.com
-#
+#YouTube Introduction to Numerical Computing with NumPy SciPy 2019 Tutorial Alex Chabot-Leclerc www.enthought.com
+
 #RM:  find time for the w3resoruce numpy
 #w3numpybasic.py includes lessons not learned in YouTube videos such as element-wise comparison
 #NumPy data types:  int8 bit -128 to 127, int16 bit -32768 to 32,767, int32, int64, uint8 unsigned integer 0 to 255, uint16 0 to 65535, uint32, uint64, float16 half precision signed float, float32 single precision signed lfoat, float64 double precision signed float, complex, compex64, complex 128.  Also boolean bool_, string, datetime, and python object.  Default is float64.
@@ -21,14 +22,17 @@ numpylinspace = np.linspace(1,12,6, dtype=np.int8)
 print(numpylinspace) #print [ 1  3  5  7  9 12].  Print six numbers starting a 1 almost equal separation at 12 inclusive
 numpyreshape = numpylinspace.reshape(3,2)
 print(numpyreshape) #print [[ 1  3]\n  [ 5  7]\n  [ 9 12]].  Reshape to three dimension two elements each or three rows two elements each.  Three rows, two columns.
+numpyflatten = numpyreshape.flatten()
+print(numpyflatten) #print [ 1  3  5  7  9 12]
+
 numpyarray = np.array([6, 4, -5, 8, 99, 1000000, -53])
 print(numpyarray.size) #print 7.  Number of elements
-print(numpyarray.shape) #print (7,).  If there's no rows, then first number is columns or number of elements.
+print(numpyarray.shape) #print (7,).  Always returns a tuple.  If there's no rows, then first number is columns or number of elements.
 print(numpyarray.dtype) #print int64
 print(numpyarray.ndim) #print 1 number of dimensions
 numpyarray = np.array([(-1, -3), (0, 5), (8, 44)])
 print(numpyarray.size) #print 6.  Number of elements
-print(numpyarray.shape) #print (3,2).  If there's no rows, then first number is columns or number of elements.  Three rows, two columns.
+print(numpyarray.shape) #print (3,2).  Always returns a tuple.  If there's no rows, then first number is columns or number of elements.  Three rows, two columns.
 print(numpyarray.dtype) #print int64
 print(numpyarray.itemsize) #print 8 prints memory size in bytes
 print(numpyarray.ndim) #print 2 number of dimensions
@@ -62,7 +66,55 @@ print(numpyl.var()) #print 5.039999999999999.  Variance is population.
 print(numpyl.std()) #print 2.24499443206.  Standard deviation is population.
 print(np.std(numpyl)) #print 2.24499443206.  Standard deviation is population.
 print(np.sqrt(numpyl)) #print [2.64575131 1.         2.         2.         1.        ] square root
+singlea = np.array([1, 2, 3, 4, 5])
+print(singlea) #print [1 2 3 4 5]
+singlea[2] = 5432
+print(singlea) #print [   1    2 5432    4    5]
+singlea[0] = 11.5
+print(singlea) #print [11  2  3  4  5]  #type coercion.  Assign a float to integer truncates decimal part.  Assign an integer to float adds decimal.
+#Use .copy() to copy an array.
+originalarray = np.array([50, 51, 52, 53])
+copyarray = originalarray.copy()
+print(originalarray) #print [50 51 52 53]
+print(copyarray) #print [50 51 52 53]
+copyarray[0] = -100
+print(originalarray) #print [50 51 52 53]
+print(copyarray) #print [-100 51 52 53]
+print("\n")
+
+
+
 #Slicing, slicers
+#Extracts a portion of a sequence by specifying a lower bound and an upper bound.  The lower bound is included.  The upper bound is excluded.  Mathematically [upper:lower).  The step value specifies the stride between elements.
+#variable[lower:upper:step]  If skipping or stepping, need two colons.
+'''
+ -5  -4  -3  -2  -1  negative index
+  0   1   2   3   4  positive index
+ 10  11  12  13  14
+'''
+easierslice = np.array([10, 11, 12, 13, 14])
+print(easierslice) #print [10 11 12 13 14]
+print(easierslice[3]) #print -13
+print(easierslice[-2]) #print -13
+print(easierslice[1:4]) #print [11 12 13]
+print(easierslice[-4:4]) #print [11 12 13]
+print(easierslice[-4:-1]) #print #print [11 12 13]
+print(easierslice[:3]) #print #print [10 11 12]
+print(easierslice[::2]) #print #print [10 12 14]
+print(easierslice[::-2]) #print #print [14 12 10]
+easyslice = np.array([[0, 1, 2, 3], [10, 11, 12, 13]])
+print(easyslice) #print [[ 0  1  2  3]\n [10 11 12 13]]
+print(easyslice[0]) #print [0 1 2 3]
+print(easyslice[0,2]) #print 2
+print(easyslice[1,0]) #print 10
+print(easyslice[1:2]) #print [[10 11 12 13]]
+print(easyslice[1, 0:3]) #print [10 11 12]
+print(easyslice[1:2,0:2]) #print [[10 11]]
+print(easyslice[0:2,1:]) #print [[ 1  2  3]\n [11 12 13]]
+print(easyslice[0:2,1:2]) #print [[ 1]\n [11]]
+print(easyslice[[0,1],[1,1]]) #print [ 1 11]
+print(easyslice[[0,1],[1,3]]) #print [ 1 13]
+print(easyslice[[0,1],[0,3]]) #print [ 0 13]
 a4horizontal3vertical2dimension = np.array([(1, 2, 3), (5, 6, 7), (8, 9, 10), (11, 12, 13)])
 print(a4horizontal3vertical2dimension)
 '''
@@ -73,10 +125,22 @@ print(a4horizontal3vertical2dimension)
 '''
 print(a4horizontal3vertical2dimension[0]) #print [1 2 3]
 print(a4horizontal3vertical2dimension[0:,2]) #print [ 3  7 10 13]
+print(a4horizontal3vertical2dimension[0:2])
+'''
+[[1 2 3]
+[5 6 7]]
+'''
 print(a4horizontal3vertical2dimension[0:2,1]) #print [2 6]
 print(a4horizontal3vertical2dimension[2,1:]) #print [ 9 10]
-print(a4horizontal3vertical2dimension[0:2,1:2]) #print [[2]\n [6]]
-print(a4horizontal3vertical2dimension[0:2,1:3]) #print [[2 3]\n [6 7]]
+print(a4horizontal3vertical2dimension[0:2,1:2])
+'''
+[[2] [6]]
+'''
+print(a4horizontal3vertical2dimension[0:2,1:3])
+'''
+[[2 3]
+ [6 7]]
+ '''
 print(a4horizontal3vertical2dimension[0,0]) #print 1
 print(a4horizontal3vertical2dimension[0,2]) #print 3
 print(a4horizontal3vertical2dimension[2,2]) #print 10
@@ -84,8 +148,86 @@ print(a4horizontal3vertical2dimension[3,2]) #print 13
 print(a4horizontal3vertical2dimension.sum()) #print 87
 print(a4horizontal3vertical2dimension.shape) #print (4,3)
 print(a4horizontal3vertical2dimension.shape[0]) #print 4
+a65 = np.array([[0, 1, 2, 3, 4, 5], [10, 11, 12, 13, 14, 15], [20, 21, 22, 23, 24, 25], [30, 31, 32, 33, 34, 35], [40, 41, 42, 43, 44, 45], [50, 51, 52, 53, 54, 55], [60, 61, 62, 63, 64, 65]])
+print(a65)
+'''
+[[ 0  1  2  3  4  5]
+ [10 11 12 13 14 15]
+ [20 21 22 23 24 25]
+ [30 31 32 33 34 35]
+ [40 41 42 43 44 45]
+ [50 51 52 53 54 55]
+ [60 61 62 63 64 65]
+ ]
+'''
+print(a65[2,4]) #print 24
+print(a65[4:]) #print [[40 41 42 43 44 45]\n  [50 51 52 53 54 55]\n  [60 61 62 63 64 65]]
+print(a65[0:3]) #print [[ 0  1  2  3  4  5]\n  [10 11 12 13 14 15]\n  [20 21 22 23 24 25]]
+print(a65[:3]) #print [[ 0  1  2  3  4  5]\n  [10 11 12 13 14 15]\n  [20 21 22 23 24 25]]
+print(a65[1, 2:5]) #print [12 13 14]
+print(a65[5,2:5]) #print [52 53 54]
+print(a65[5:6,2:5]) #print [[52 53 54]]
+print(a65[0:3, 1:3])
+'''
+[[ 1  2]
+ [11 12]
+ [21 22]]
+'''
+print(a65[:,2]) #print [ 2 12 22 32 42 52 62]
+print(a65[0:,2]) #print [ 2 12 22 32 42 52 62]
+print(a65[1:4,4:5])
+'''
+[[14]
+ [24]
+ [34]]
+'''
+print(a65[:,3:5])
+'''
+[[ 3  4]
+ [13 14]
+ [23 24]
+ [33 34]
+ [43 44]
+ [53 54]
+ [63 64]]
+'''
+print(a65[4:, 4:])
+'''
+[[44 45]
+ [54 55]
+ [64 65]]
+'''
+print(a65[3:5,2:4])
+'''
+[[32 33]
+ [42 43]]
+'''
+print(a65[2::2, ::4]) #RM:  same as print(a65[2::2, 0::4])
+'''
+[[20 24]
+ [40 44]
+ [60 64]]
+'''
+print(a65[0:,1:4:2])
+'''
+[[ 1  3]
+ [11 13]
+ [21 23]
+ [31 33]
+ [41 43]
+ [51 53]
+ [61 63]]
+'''
+print(a65[1:4:2, 0:4:2])
+'''
+[[10 12]
+ [30 32]]
+'''
+print("\n")
+
 maximumsum = 0
 a4horizontal3vertical2dimensionhorizontalsum = a4horizontal3vertical2dimension.sum(axis=1) #Adds each horizontal
+print(a4horizontal3vertical2dimensionhorizontalsum) #print [ 6 18 27 36]
 for x in range(0,a4horizontal3vertical2dimension.shape[0]):
 	tempsum = a4horizontal3vertical2dimensionhorizontalsum[x]
 	if tempsum > maximumsum:
@@ -143,8 +285,19 @@ print(math1//math2) #works for multiplication, too
 [[0 0 0]
  [4 2 2]]
 '''
+print(math1**math2)
+'''
+[[    1   256 19683]
+ [    4    25   216]]
+'''
+print(math1*10)
+'''
+[[10 20 30]
+ [40 50 60]]
+'''
 print(math1.ravel()) #print [1 2 3 4 5 6] multi dimension multidimension to one dimension
 print(math2.ravel()) #print [7 8 9 1 2 3] multi dimension to single dimension
+
 
 #String numpy, character numpy
 concatenatestringadd = np.char.add(["hello","abc"],["goodbye","xyz"])
@@ -168,7 +321,29 @@ print(np.char.splitlines("hello\n how are you?")) #print ['hello', ' how are you
 print(np.char.strip(["nina","admin","anaita", "anona"],"a")) #print ['nin' 'dmin' 'nait' 'non'] removes the first and last "a"
 print(np.char.join([":","-","."],["dmy","ymd","period"])) #print ['d:m:y' 'y-m-d' 'p.e.r.i.o.d']
 print(np.char.replace("He is a good dancer","is","was")) #print He was a good dancer
-
+indexstringtest = "The quick brown fox jumped over the lazy dog"
+print(indexstringtest[11:37]) #print rown fox jumped over the l
+print(indexstringtest[11:-7]) #print rown fox jumped over the l
+print(indexstringtest[11:37] == indexstringtest[11:-7]) #print True
+print(indexstringtest[-33:37]) #print rown fox jumped over the l
+blankstringarray = np.empty((4,3), dtype=np.str)
+print(blankstringarray)
+'''
+[['' '' '']
+ ['' '' '']
+ ['' '' '']
+ ['' '' '']]
+'''
+blankstringarray[0] = "X"
+blankstringarray[2:3,1:] =  "Y"
+blankstringarray[1,2] =  "Z"
+print(blankstringarray)
+'''
+[['X' 'X' 'X']
+ ['' '' 'Z']
+ ['' 'Y' 'Y']
+ ['' '' '']]
+'''
 
 print("-------------------------------")
 #How to add a new row to an empty numpy array
@@ -198,9 +373,41 @@ print(blanklistnp)
  [20  6 11  9 11]]
 '''
 print(blanklistnp.ravel()) #print [ 8 20  4 20  6  0  9  5  1  0 12 20  3  6 14  4  4 20 16 19  9 18 10 10 14 20  6 11  9 11] combine multi dimension to single dimension one dimension
+print("\n")
 
+numpyflatten = numpyreshape.flatten() #reference line 25
+print(numpyflatten) #print [ 1  3  5  7  9 12]
+array8 = numpyflatten.reshape(2,3)
+print(array8)
+'''
+[[ 1  3  5]
+ [ 7  9 12]]
+'''
+numpyflatten2 = array8.flatten(order="F") #C is row major, F is column-major, A is default
+print(numpyflatten2) #print [ 1  7  3  9  5 12]
+array9 = np.arange(0,12)
+print(array9) #print [ 0  1  2  3  4  5  6  7  8  9 10 11]
+array9 = array9.reshape(4,3)
+print(array9)
+'''
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]]
+'''
+numpytranspose = np.transpose(array9)
+print(numpytranspose)
+'''
+[[ 0  3  6  9]
+ [ 1  4  7 10]
+ [ 2  5  8 11]]
+'''
+array11 = np.arange(8).reshape(2,2,2)  #three dimension array.
+print(array11)
+'''
+[[[0 1]
+  [2 3]]
 
-
-
-
-
+ [[4 5]
+  [6 7]]]
+'''
