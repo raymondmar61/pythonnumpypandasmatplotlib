@@ -94,8 +94,10 @@ print("\n")
 '''
 easierslice = np.array([10, 11, 12, 13, 14])
 print(easierslice) #print [10 11 12 13 14]
-print(easierslice[3]) #print -13
-print(easierslice[-2]) #print -13
+print(easierslice[3]) #print 13
+print(easierslice[3:]) #print [13 14]
+print(easierslice[:3]) #print [10 11 12]
+print(easierslice[-2]) #print 13
 print(easierslice[1:4]) #print [11 12 13]
 print(easierslice[-4:4]) #print [11 12 13]
 print(easierslice[-4:-1]) #print #print [11 12 13]
@@ -223,6 +225,27 @@ print(a65[1:4:2, 0:4:2])
 [[10 12]
  [30 32]]
 '''
+slicearray1 = np.arange(0,20)
+print(slicearray1) #print [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19]
+#RM: slice is slice(inclusive, exclusive, step rate) like range, arange.
+print(slicearray1[slice(2, 9, 2)]) #print [2 4 6 8]
+print(slicearray1[slice(3, 15, 2)]) #print [3 5 7 9 11 13]
+print(slicearray1[slice(4, 16, 2)]) #print [4 6 8 10 12 14]
+print(slicearray1[slice(5, 20, 5)]) #print [ 5 10 15]
+splitarray = np.arange(9)
+print(splitarray) #print [0 1 2 3 4 5 6 7 8]
+#the np.split() splits the array at the specificied index numbers
+print(np.split(splitarray, 3)) #print [array([0, 1, 2]), array([3, 4, 5]), array([6, 7, 8])]
+print(np.split(splitarray, [4,5])) #print [array([0, 1, 2, 3]), array([4]), array([5, 6, 7, 8])]
+print(np.split(splitarray, [4,7])) #print [array([0, 1, 2, 3]), array([4, 5, 6]), array([7, 8])]
+print(np.split(splitarray, [2,4,6])) #print [array([0, 1]), array([2, 3]), array([4, 5]), array([6, 7, 8])]
+splitarray2 = np.arange(10, 21)
+#the np.split() splits the array at the specificied index number
+print(splitarray2) #print [10 11 12 13 14 15 16 17 18 19 20]
+print(np.split(splitarray2, [0, 3])) #print [array([], dtype=int64), array([10, 11, 12]), array([13, 14, 15, 16, 17, 18, 19, 20])]
+print(np.split(splitarray2, [3])) #print [array([10, 11, 12]), array([13, 14, 15, 16, 17, 18, 19, 20])]
+print(np.split(splitarray2, [3, 6, 9])) #print [array([10, 11, 12]), array([13, 14, 15]), array([16, 17, 18]), array([19, 20])]
+print(np.split(splitarray2, [3,7])) #print [array([10, 11, 12]), array([13, 14, 15, 16]), array([17, 18, 19, 20])]
 print("\n")
 
 maximumsum = 0
@@ -344,6 +367,40 @@ print(blankstringarray)
  ['' 'Y' 'Y']
  ['' '' '']]
 '''
+arraymath1 = np.arange(0,9)
+print(arraymath1) #print [0 1 2 3 4 5 6 7 8]
+arraymath1 = arraymath1.reshape(3,3)
+print(arraymath1)
+'''
+[[0 1 2]
+ [3 4 5]
+ [6 7 8]]
+'''
+arraymath2 = np.array([10,11,12])
+print(np.add(arraymath1,arraymath2))  #RM:  the shape horizontal must be the same.  arraymath2 = np.array([10, 11]) error message.
+'''
+[[10 12 14]
+ [13 15 17]
+ [16 18 20]]
+'''
+print(np.subtract(arraymath1,arraymath2))  #RM:  the shape horizontal must be the same.  arraymath2 = np.array([10, 11]) error message.
+'''
+[[-10 -10 -10]
+ [ -7  -7  -7]
+ [ -4  -4  -4]]
+'''
+print(np.multiply(arraymath1,arraymath2))  #RM:  the shape horizontal must be the same.  arraymath2 = np.array([10, 11]) error message.
+'''
+[[ 0 11 24]
+ [30 44 60]
+ [60 77 96]]
+'''
+print(np.divide(arraymath1,arraymath2))  #RM:  the shape horizontal must be the same.  arraymath2 = np.array([10, 11]) error message.
+'''
+[[0.         0.09090909 0.16666667]
+ [0.3        0.36363636 0.41666667]
+ [0.6        0.63636364 0.66666667]]
+'''
 
 print("-------------------------------")
 #How to add a new row to an empty numpy array
@@ -410,4 +467,55 @@ print(array11)
 
  [[4 5]
   [6 7]]]
+'''
+iteratearray = np.array([[0,5,10], [15,20,25], [30,35,40]])
+print(iteratearray)
+'''
+[[ 0  5 10]
+ [15 20 25]
+ [30 35 40]]
+'''
+for x in iteratearray:
+	print(x) #print noting
+for x in np.nditer(iteratearray):
+	print(x) #print 0\n 5\n 10\n 15\n 20\n 25\n 30\n 35\n 40
+for x in np.nditer(iteratearray, order="C"):  #C is row major, F is column-major, A is default
+	print(x) #print 0\n 5\n 10\n 15\n 20\n 25\n 30\n 35\n 40
+for x in np.nditer(iteratearray, order="F"):  #C is row major, F is column-major, A is default
+	print(x) #print 0\n 15\n 30\n 5\n 20\n 35\n 10\n 25\n 40 
+for x in np.nditer(iteratearray, order="A"):  #C is row major, F is column-major, A is default
+	print(x) #print 0\n 5\n 10\n 15\n 20\n 25\n 30\n 35\n 40
+joinarray1 = np.array([[1,2],[3,4]])
+joinarray2 = np.array([[5,6],[7,8]])
+print(joinarray1)
+'''
+[[1 2]
+ [3 4]]
+ '''
+print(joinarray2)
+'''
+[[5 6]
+ [7 8]]
+'''
+joinarray12 = np.concatenate([joinarray1, joinarray2])
+print(joinarray12)
+'''
+[[1 2]
+ [3 4]
+ [5 6]
+ [7 8]]
+'''
+joinarray12 = np.concatenate([joinarray1, joinarray2], axis=0) #Concatenate dimensions must be the same.  Axis=0 is default.
+print(joinarray12)
+'''
+[[1 2]
+ [3 4]
+ [5 6]
+ [7 8]]
+'''
+joinarray12 = np.concatenate([joinarray1, joinarray2], axis=1) #Concatenate dimensions must be the same.  horizontal axis=1.
+print(joinarray12)
+'''
+[[1 2 5 6]
+ [3 4 7 8]]
 '''
