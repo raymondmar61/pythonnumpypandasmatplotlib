@@ -188,7 +188,7 @@ plt.tight_layout()
 plt.show()
 """
 
-
+"""
 #Matplotlib Tutorial (Part 6)_ Histograms [720p]
 #https://stackoverflow.com/questions/26454649/python-round-up-to-the-nearest-ten
 #https://stackoverflow.com/questions/3348825/how-to-round-integers-in-python
@@ -226,5 +226,114 @@ plt.legend()
 plt.title("Ages Of Respondents From data06histograms.csv")
 plt.xlabel("Ages")
 plt.ylabel("Total Respondents")
+plt.tight_layout()
+plt.show()
+"""
+
+"""
+#Matplotlib Tutorial (Part 7)_ Scatter Plots [720p]
+import pandas as pd
+from matplotlib import pyplot as plt  #RM:  Python pandas must be uploaded first, matplotlib afterwards.
+plt.style.use("seaborn")
+x = [5, 7, 8, 5, 6, 7, 9, 2, 3, 4, 4, 4, 2, 6, 3, 6, 8, 6, 4, 1]
+y = [7, 4, 3, 9, 1, 3, 2, 5, 2, 4, 8, 7, 1, 6, 4, 9, 7, 7, 5, 1]
+plt.scatter(x, y, s=100, c="green", marker="X", edgecolor="black", linewidth=1, alpha=0.75)  #s is size of dot plots, c is color, edgecolor is the marker's border color, linewidth is the size of the border, alpha is transparency 0 is transparent to 1 is solid
+plt.tight_layout()
+plt.show()
+differentgraycolorforeachplot = [7, 5, 9, 7, 5, 7, 2, 5, 3, 7, 1, 2, 8, 1, 9, 2, 5, 6, 7, 5]
+plt.scatter(x, y, s=100, c=differentgraycolorforeachplot, marker="*", edgecolor = "black", linewidth=1, alpha=1)
+plt.tight_layout()
+plt.show()
+dotplotsizes = [209, 486, 381, 255, 191, 351, 185, 228, 174, 538, 239, 394, 399, 153, 273, 293, 436, 501, 397, 539]
+plt.scatter(x, y, s=dotplotsizes, c=differentgraycolorforeachplot, cmap="Greens", marker="*", edgecolor = "black", linewidth=1, alpha=1) #cmap or color map plots different green color for each x value plot.  Also, different sizes for each dot plots s = dotplotsizes.
+colorbar = plt.colorbar() #colorbar to assist reading how reading the 
+colorbar.set_label("Colorbar Title For plt.colorbar()")
+plt.tight_layout()
+plt.show()
+youtubedata = pd.read_csv("2019-05-31-data.csv")
+viewcount = youtubedata["view_count"]
+likes = youtubedata["likes"]
+ratio = youtubedata["ratio"]
+plt.scatter(viewcount, likes, c=ratio, cmap="summer")
+colorbar = plt.colorbar() #colorbar to assist reading how reading the 
+colorbar.set_label("Colorbar Title For plt.colorbar() Like/Dislike Ratio")
+plt.xscale("log") #set the x axis and y axis scale to log between 10^6 to 10^9 in this data set
+plt.yscale("log") #set the x axis and y axis scale to log between 10^6 to 10^9 in this data set
+plt.title("Trending YouTube Videos")
+plt.xlabel("View Count")
+plt.ylabel("Total Likes")
+plt.tight_layout()
+plt.show()
+"""
+
+"""
+#Matplotlib Tutorial (Part 8)_ Plotting Time Series Data [720p]
+import pandas as pd
+from datetime import datetime, timedelta
+from matplotlib import pyplot as plt  #RM:  Python pandas must be uploaded first, matplotlib afterwards.
+from matplotlib import dates as mpldates
+plt.style.use("seaborn")
+#Instructor showed how to format dates
+dates = [datetime(2019, 5, 24), datetime(2019, 5, 25), datetime(2019, 5, 26), datetime(2019, 5, 27), datetime(2019, 5, 28), datetime(2019, 5, 29), datetime(2019, 5, 30)]
+y = [0, 1, 3, 4, 6, 5, 7]
+#plt.plot_date(dates, y) #plot a scatterplot dates is x-axis and y is y-axis
+#plt.plot_date(dates, y, linestyle="solid") #plot a line chart dates is x-axis and y is y-axis
+#plt.gcf().autofmt_xdate()  #gcf get current figure.  autofmt automatically format to make x-axis look better.
+#dateformat = mpldates.DateFormatter("%b %d, %Y") #format date to display month day, year May 24, 2019
+#plt.gca().xaxis.set_major_formatter(dateformat) #gca get current axis set the formatting for the X-axis
+#plt.show()
+
+bitcointdata = pd.read_csv("data08timeseries.csv")
+bitcointdata["Date"] = pd.to_datetime(bitcointdata["Date"]) #RM:  Currently the dates in the file is read as a string.  Convert to date.
+bitcointdata.sort_values("Date", inplace=True)
+pricedate = bitcointdata["Date"] #case sensitive
+priceclose = bitcointdata["Close"] #case sensitive
+plt.plot_date(pricedate, priceclose, linestyle="solid") #plot a line chart dates is x-axis and y is y-axis
+plt.gcf().autofmt_xdate()  #gcf get current figure.  autofmt automatically format to make x-axis look better.
+plt.title("Bitcoin Prices")
+plt.xlabel("Date")
+plt.ylabel("Closing Price")
+plt.tight_layout()
+plt.show()
+"""
+
+
+#Matplotlib Tutorial (Part 9)_ Plotting Live Data in Real-Time [720p]
+#RM:  The instructor is simulating a live chart updating every one second.
+import random
+from itertools import count
+import pandas as pd
+from matplotlib import pyplot as plt  #RM:  Python pandas must be uploaded first, matplotlib afterwards.
+from matplotlib.animation import FuncAnimation
+# plt.style.use("fivethirtyeight")
+# xvalues = []
+# yvalues = []
+# index = count()
+# print(index) #print count(0)
+# next(index)
+# print(index) #print count(1)
+# next(index)
+# def animate(i):
+# 	xvalues.append(next(index))  #RM:  I wrote two print(index) and two next(index).  Chart starts at x=2.
+# 	yvalues.append(random.randint(0, 5))
+# 	plt.cla() #cla instructor thinks clear axis.  It eliminates the different color variation.
+# 	plt.plot(xvalues, yvalues)
+# variableanimate = FuncAnimation(plt.gcf(), animate, interval=1000) #gcf get current figure.  interval=1000 is one second.
+# plt.tight_layout()
+# plt.show()
+plt.style.use("fivethirtyeight")
+#Run data_get.py to generate a simulation of live data saved to data09livedata.csv.  Run the Python code as data_get.py generates data.
+index = count()
+def animate(i):
+	livedata = pd.read_csv("data09livedata.csv")
+	x = livedata["x_value"]
+	y1 = livedata["total_1"]
+	y2 = livedata["total_2"]
+	plt.cla() #cla instructor thinks clear axis.  It eliminates the different color variation.
+	plt.plot(x, y1, label="Channel 1")
+	plt.plot(x, y2, label="Channel 2")
+	plt.legend(loc="upper left")
+	plt.tight_layout()
+variableanimate = FuncAnimation(plt.gcf(), animate, interval=1000) #gcf get current figure.  interval=1000 is one second.
 plt.tight_layout()
 plt.show()
