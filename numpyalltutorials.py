@@ -485,6 +485,31 @@ for x in np.nditer(iteratearray, order="F"):  #C is row major, F is column-major
 	print(x) #print 0\n 15\n 30\n 5\n 20\n 35\n 10\n 25\n 40 
 for x in np.nditer(iteratearray, order="A"):  #C is row major, F is column-major, A is default
 	print(x) #print 0\n 5\n 10\n 15\n 20\n 25\n 30\n 35\n 40
+resize2darray = np.array([[1, 2, 3], [4, 5, 6]])
+print(resize2darray)
+'''
+[[1 2 3]
+ [4 5 6]]
+'''
+print(resize2darray.shape) #print (2, 3)
+resize2darrayvertical = np.resize(resize2darray, (3,2))
+print(resize2darrayvertical)
+'''
+[[1 2]
+ [3 4]
+ [5 6]]
+'''
+print(resize2darray.shape) #print (3, 2)
+#resize doesn't have to match dimensions.  resize doesn't have to resize to same shape.  Numpy repeats to fill in blanks in unmatched dimensions rows and columns.
+resizearray3 = np.resize(resize2darrayvertical, (3,3))
+print(resizearray3)
+'''
+[[1 2 3]
+ [4 5 6]
+ [1 2 3]]
+'''
+
+
 joinarray1 = np.array([[1,2],[3,4]])
 joinarray2 = np.array([[5,6],[7,8]])
 print(joinarray1)
